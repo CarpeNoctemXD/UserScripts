@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         VS Code Extension (VSIX) Downloader - with Version Selector
 // @namespace    https://github.com/CarpeNoctemXD
-// @version      0.4.7
+// @version      0.4.7.1
 // @description  Adds a version selector to download any VSIX version from the Marketplace.
-// @author       CarpeNoctemXD <https://github.com/CarpeNoctemXD>
+// @author       CarpeNoctemXD
 // @match        https://marketplace.visualstudio.com/items?itemName=*
 // @grant        none
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=https://marketplace.visualstudio.com
