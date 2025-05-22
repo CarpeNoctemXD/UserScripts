@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VS Code Extension (VSIX) Downloader - with Version Selector
 // @namespace    https://github.com/CarpeNoctemXD/UserScripts
-// @version      0.4.7.2
+// @version      0.4.8
 // @description  Adds a version selector to download any VSIX version from the Marketplace.
 // @author       CarpeNoctemXD
 // @match        https://marketplace.visualstudio.com/items?itemName=*
@@ -128,14 +128,27 @@
 
             // Version list
             versions.forEach(({ version, dateText }, idx) => {
-                const btn = document.createElement('button');
                 if (idx === 0) {
+                    // Create a wrapper div for the tag and button
+                    const wrapper = document.createElement('div');
+                    wrapper.style.position = 'relative';
+                    wrapper.style.width = '100%';
+                    wrapper.style.marginBottom = '12px'; // reduced spacing
+
+                    // Latest tag above the button
+                    const latestTag = document.createElement('span');
+                    latestTag.textContent = 'Latest';
+                    latestTag.style.cssText = 'position:absolute;top:-22px;left:0;background:#fff;color:#7c4dff;font-size:14px;padding:2.5px 12px;border-radius:16px;letter-spacing:0.5px;font-weight:bold;box-shadow:0 2px 8px rgba(124,77,255,0.13);border:2px solid #7c4dff;z-index:10;';
+                    wrapper.appendChild(latestTag);
+
+                    // The button itself
+                    const btn = document.createElement('button');
                     btn.style.cssText = `
                         display: flex;
                         align-items: center;
                         justify-content: flex-start;
                         width: 100%;
-                        margin: 10px 0 28px 0;
+                        margin: 0;
                         padding: 20px 32px 20px 18px;
                         background: linear-gradient(90deg, #8e24aa 0%, #7c4dff 100%);
                         color: #fff;
@@ -153,17 +166,29 @@
                         gap: 0;
                         overflow: hidden;
                     `;
-                    // Use a span for the text to ensure left alignment and no overlap
                     const textSpan = document.createElement('span');
                     textSpan.textContent = `${version} — ${dateText}`;
                     textSpan.style.cssText = 'flex:1; text-align:left; white-space:normal; word-break:break-word; z-index:1;';
-                    btn.textContent = '';
                     btn.appendChild(textSpan);
-                    const latestTag = document.createElement('span');
-                    latestTag.textContent = 'Latest';
-                    latestTag.style.cssText = 'background:#fff;color:#7c4dff;font-size:14px;padding:2.5px 12px;border-radius:16px;position:absolute;top:16px;right:24px;letter-spacing:0.5px;font-weight:bold;box-shadow:0 2px 8px rgba(124,77,255,0.18);border:2px solid #7c4dff;z-index:10;';
-                    btn.appendChild(latestTag);
+                    btn.addEventListener('mouseenter', () => btn.style.background = 'linear-gradient(90deg, #7c4dff 0%, #8e24aa 100%)');
+                    btn.addEventListener('mouseleave', () => btn.style.background = 'linear-gradient(90deg, #8e24aa 0%, #7c4dff 100%)');
+                    btn.addEventListener('focus', () => btn.style.boxShadow = '0 0 0 5px #b39ddb');
+                    btn.addEventListener('blur', () => btn.style.boxShadow = '0 8px 32px rgba(124,77,255,0.18)');
+                    btn.addEventListener('click', () => {
+                        const downloadUrl = `https://marketplace.visualstudio.com/_apis/public/gallery/publishers/${publisher}/vsextensions/${extension}/${version}/vspackage`;
+                        const link = document.createElement('a');
+                        link.href = downloadUrl;
+                        link.download = `${itemName}-${version}.vsix`;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        document.body.removeChild(overlay);
+                        showPopupMessage(`VSIX for version ${version} grabbed!`);
+                    });
+                    wrapper.appendChild(btn);
+                    popup.appendChild(wrapper);
                 } else {
+                    const btn = document.createElement('button');
                     btn.style.cssText = `
                         display: flex;
                         align-items: center;
@@ -187,37 +212,24 @@
                     const textSpan = document.createElement('span');
                     textSpan.textContent = `${version} — ${dateText}`;
                     textSpan.style.cssText = 'flex:1; text-align:left; white-space:normal; word-break:break-word;';
-                    btn.textContent = '';
                     btn.appendChild(textSpan);
+                    btn.addEventListener('mouseenter', () => btn.style.background = '#005fa3');
+                    btn.addEventListener('mouseleave', () => btn.style.background = '#0078d4');
+                    btn.addEventListener('focus', () => btn.style.boxShadow = '0 0 0 2px #90caf9');
+                    btn.addEventListener('blur', () => btn.style.boxShadow = 'none');
+                    btn.addEventListener('click', () => {
+                        const downloadUrl = `https://marketplace.visualstudio.com/_apis/public/gallery/publishers/${publisher}/vsextensions/${extension}/${version}/vspackage`;
+                        const link = document.createElement('a');
+                        link.href = downloadUrl;
+                        link.download = `${itemName}-${version}.vsix`;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        document.body.removeChild(overlay);
+                        showPopupMessage(`VSIX for version ${version} grabbed!`);
+                    });
+                    popup.appendChild(btn);
                 }
-                btn.addEventListener('mouseenter', () => {
-                    if (idx === 0) {
-                        btn.style.background = 'linear-gradient(90deg, #7c4dff 0%, #8e24aa 100%)';
-                    } else {
-                        btn.style.background = '#005fa3';
-                    }
-                });
-                btn.addEventListener('mouseleave', () => {
-                    if (idx === 0) {
-                        btn.style.background = 'linear-gradient(90deg, #8e24aa 0%, #7c4dff 100%)';
-                    } else {
-                        btn.style.background = '#0078d4';
-                    }
-                });
-                btn.addEventListener('focus', () => btn.style.boxShadow = idx === 0 ? '0 0 0 5px #b39ddb' : '0 0 0 2px #90caf9');
-                btn.addEventListener('blur', () => btn.style.boxShadow = idx === 0 ? '0 8px 32px rgba(124,77,255,0.18)' : 'none');
-                btn.addEventListener('click', () => {
-                    const downloadUrl = `https://marketplace.visualstudio.com/_apis/public/gallery/publishers/${publisher}/vsextensions/${extension}/${version}/vspackage`;
-                    const link = document.createElement('a');
-                    link.href = downloadUrl;
-                    link.download = `${itemName}-${version}.vsix`;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    document.body.removeChild(overlay);
-                    showPopupMessage(`VSIX for version ${version} grabbed!`);
-                });
-                popup.appendChild(btn);
             });
 
             // Custom version input
