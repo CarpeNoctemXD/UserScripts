@@ -1,8 +1,10 @@
 // ==UserScript==
 // @name         VS Code Extension (VSIX) Downloader - with Version Selector
+// @name:el      Λήψη Επεκτάσεων VS Code (VSIX) - με Επιλογέα Έκδοσης
 // @namespace    https://github.com/CarpeNoctemXD/
-// @version      0.4.8.1
+// @version      0.4.8.2
 // @description  Adds a version selector to download any VSIX version from the Marketplace.
+// @description:el  Προσθέτει έναν επιλογέα έκδοσης για λήψη οποιασδήποτε έκδοσης VSIX από το Marketplace.
 // @author       CarpeNoctemXD
 // @match        https://marketplace.visualstudio.com/items?itemName=*
 // @grant        none
@@ -11,7 +13,7 @@
 // @downloadURL  https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/visualstudio/manual_vsix_downloader.js
 // @license      MIT
 // ==/UserScript==
-
+    
 (function () {
     'use strict';
 
