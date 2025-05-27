@@ -1,8 +1,10 @@
 // ==UserScript==
-// @name         SteamCMD ids for workshop mods
+// @name         SteamCMD Link Assistant
+// @name:el      Βοηθός Συνδέσμων SteamCMD
 // @namespace    https://github.com/CarpeNoctemXD/
-// @version      0.8.1
+// @version      0.8.2
 // @description  Generate SteamCMD download command for mods from Steam Workshop
+// @description:el Δημιουργεί εντολή λήψης από mods στο Steam Workshop για το SteamCMD
 // @author       CarpeNoctemXD
 // @match        https://steamcommunity.com/sharedfiles/filedetails/*
 // @match        https://steamcommunity.com/workshop/filedetails/*
