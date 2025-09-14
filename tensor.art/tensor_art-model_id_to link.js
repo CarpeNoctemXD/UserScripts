@@ -3,8 +3,8 @@
 // @name:el      Tensor.art Μοντέλα ID σε συνδέσμους
 // @description  Adds model links under all 18-digit model IDs on tensor.art
 // @description:el  Προσθέτει συνδέσμους μοντέλου κάτω από όλα τα 18-ψήφια ID μοντέλου στο tensor.art
-// @namespace    https://github.com/CarpeNoctemXD/
-// @version      1.1.0
+// @namespace    https://github.com/CarpeNoctemXD/UserScripts
+// @version      1.1.0.1
 // @author       CarpeNoctemXD
 // @match        https://tensor.art/*
 // @icon         https://tensor.art/favicon.ico

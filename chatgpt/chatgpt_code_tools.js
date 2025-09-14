@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         ChatGPT Code Tools
 // @name:el      Εργαλεία Κώδικα για το ChatGPT
-// @namespace    https://github.com/CarpeNoctemXD/
-// @version      1.1.11
+// @namespace    https://github.com/CarpeNoctemXD/UserScripts
+// @version      1.1.11.1
 // @description  Adds functionality to ChatGPT code blocks, including options to save or copy code snippets.
 // @description:el Προσθέτει λειτουργικότητα στα μπλοκ κώδικα του ChatGPT, συμπεριλαμβανομένων επιλογών για αποθήκευση ή αντιγραφή αποσπασμάτων κώδικα.
 // @author       CarpeNoctemXD
