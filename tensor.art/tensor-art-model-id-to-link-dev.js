@@ -4,12 +4,12 @@
 // @description  Adds model links under all 18-digit model IDs on tensor.art
 // @description:el  Προσθέτει συνδέσμους μοντέλου κάτω από όλα τα 18-ψήφια ID μοντέλου στο tensor.art
 // @namespace    https://github.com/CarpeNoctemXD/
-// @version      1.1.1
+// @version      1.1.1.1
 // @author       CarpeNoctemXD
 // @match        https://tensor.art/*
 // @icon         https://tensor.art/favicon.ico
-// @updateURL    https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/tensor.art/tensor_art-model_id_to_link-dev.js
-// @downloadURL  https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/tensor.art/tensor_art-model_id_to_link-dev.js
+// @updateURL    https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/tensor.art/tensor-art-model-id-to-link-dev.js
+// @downloadURL  https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/tensor.art/tensor-art-model-id-to-link-dev.js
 // @license      MIT
 // @grant        none
 // ==/UserScript==
