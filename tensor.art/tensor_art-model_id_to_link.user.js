@@ -4,12 +4,12 @@
 // @description  Adds model links with previews for actual model IDs on tensor.art. Features draggable GUI and model name previews.
 // @description:el  Προσθέτει συνδέσμους μοντέλου με προεπισκόπηση για πραγματικά ID μοντέλων στο tensor.art. Με μετακινήσιμο GUI και προεπισκοπήσεις ονομάτων μοντέλων.
 // @namespace    https://github.com/CarpeNoctemXD/UserScripts
-// @version      1.2.1
+// @version      1.2.2
 // @author       CarpeNoctemXD
 // @match        https://tensor.art/*
 // @icon         https://tensor.art/favicon.ico
-// @updateURL    https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/tensor.art/tensor-art-model-id-to-link.js
-// @downloadURL  https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/tensor.art/tensor-art-model-id-to-link.js
+// @updateURL    https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/tensor.art/tensor_art-model_id_to_link.user.js
+// @downloadURL  https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/tensor.art/tensor_art-model_id_to_link.user.js
 // @license      MIT
 // @grant        GM_xmlhttpRequest
 // @connect      tensor.art

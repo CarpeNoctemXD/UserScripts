@@ -4,7 +4,7 @@
 // @namespace   https://github.com/CarpeNoctemXD/UserScripts
 // @description Adds the repository size next to the repo name on github search and repo pages
 // @description:el Προσθέτει το μέγεθος του αποθετηρίου δίπλα στο όνομα του αποθετηρίου στις σελίδες αναζήτησης και αποθετηρίων του github
-// @version     1.0.0
+// @version     1.0.1
 // @author      CarpeNoctemXD
 // @match       *://github.com/search*
 // @match       *://github.com/*/*
@@ -12,8 +12,8 @@
 // @grant       GM_setValue
 // @grant       GM_getValue
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=https://github.com
-// @updateURL   https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/github/github-repo-size.js
-// @downloadURL https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/github/github-repo-size.js
+// @updateURL   https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/github/github-repo_size.user.js
+// @downloadURL https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/github/github-repo_size.user.js
 // @license     MIT
 // ==/UserScript==
 

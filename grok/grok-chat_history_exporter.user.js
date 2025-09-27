@@ -2,15 +2,15 @@
 // @name         Grok Chat History Exporter
 // @name:el      Εξαγωγέας Ιστορικού Συνομιλιών Grok
 // @namespace    https://github.com/CarpeNoctemXD/UserScripts
-// @version      2.0.7.1
+// @version      2.0.8
 // @description  Export Grok chat conversations to Markdown format
 // @description:el Εξαγωγή συνομιλιών Grok σε μορφή Markdown
 // @author       CarpeNoctemXD
 // @match        https://grok.com/*
 // @grant        none
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=grok.com
-// @updateURL    https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/grok/grok-chat-history-exporter.js
-// @downloadURL  https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/grok/grok-chat-history-exporter.js
+// @updateURL    https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/grok/grok-chat_history_exporter.user.js
+// @downloadURL  https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/grok/grok-chat_history_exporter.user.js
 // @license      MIT
 // ==/UserScript==
 

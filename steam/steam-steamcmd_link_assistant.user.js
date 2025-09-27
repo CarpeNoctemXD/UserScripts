@@ -2,18 +2,18 @@
 // @name         SteamCMD Link Assistant
 // @name:el      Βοηθός Συνδέσμων SteamCMD
 // @namespace    https://github.com/CarpeNoctemXD/UserScripts
-// @version      0.8.2.1
+// @version      0.8.3
 // @description  Generate SteamCMD download command for mods from Steam Workshop
 // @description:el Δημιουργεί εντολή λήψης από mods στο Steam Workshop για το SteamCMD
 // @author       CarpeNoctemXD
 // @match        https://steamcommunity.com/sharedfiles/filedetails/*
 // @match        https://steamcommunity.com/workshop/filedetails/*
 // @match        https://steamcommunity.com/workshop/browse/*
-// @run-at       document-end// @run-at       document-end
+// @run-at       document-end
 // @grant        GM_setClipboard
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=https://steamcommunity.com
-// @updateURL    https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/steam/steamcmd_link_assistant.js
-// @downloadURL  https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/steam/steamcmd_link_assistant.js
+// @updateURL    https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/steam/steam-steamcmd_link_assistant.user.js
+// @downloadURL  https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/steam/steam-steamcmd_link_assistant.user.js
 // @license      MIT
 // ==/UserScript==
 
