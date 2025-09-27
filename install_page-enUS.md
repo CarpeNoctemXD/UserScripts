@@ -9,8 +9,7 @@
 
 ## 📦 Installation
 
-
-> [!info]+ Quick Install 🚀  
+> [!TIP]   
 > 1. Make sure you have Violentmonkey installed
 > 2. Click on any script badge below
 > 3. Click "Install" in Violentmonkey's prompt
