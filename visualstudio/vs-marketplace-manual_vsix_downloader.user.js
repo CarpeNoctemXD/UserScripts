@@ -2,15 +2,15 @@
 // @name         VS Code Extension (VSIX) Manual Downloader
 // @name:el      Λήψη Επεκτάσεων VS Code (VSIX) Χειροκίνητα
 // @namespace    https://github.com/CarpeNoctemXD/UserScripts
-// @version      0.5.0
+// @version      0.5.1
 // @description  Adds a version selector to download any VSIX version from the Marketplace.
 // @description:el  Προσθέτει έναν επιλογέα έκδοσης για λήψη οποιασδήποτε έκδοσης VSIX από το Marketplace.
 // @author       CarpeNoctemXD
 // @match        https://marketplace.visualstudio.com/items?itemName=*
 // @grant        none
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=https://marketplace.visualstudio.com
-// @updateURL    https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/visualstudio/vs-marketplace-manual-vsix-downloader.user.js
-// @downloadURL  https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/visualstudio/vs-marketplace-manual-vsix-downloader.user.js
+// @updateURL    https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/visualstudio/vs-marketplace-manual_vsix_downloader.user.js
+// @downloadURL  https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/refs/heads/main/visualstudio/vs-marketplace-manual_vsix_downloader.user.js
 // @license      MIT
 // ==/UserScript==
     
