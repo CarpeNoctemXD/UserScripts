@@ -67,7 +67,7 @@
 ## ![](https://www.google.com/s2/favicons?sz=48&domain=https://google.com) ![](https://www.google.com/s2/favicons?sz=64&domain=https://bing.com) ![](https://www.google.com/s2/favicons?sz=48&domain=https://duckduckgo.com) Search Engines
 ### Polyglot Keyboard Fixer
 
-[![Install Polyglot Keyboard Fixer](https://img.shields.io/badge/Install-Polyglot_Keyboard_Fixer-red?style=for-the-badge&logo=javascript)](https://github.com/CarpeNoctemXD/UserScripts/raw/refs/heads/main/chatgpt/chatgpt-code_tools.user.js)
+[![Install Polyglot Keyboard Fixer](https://img.shields.io/badge/Install-Polyglot_Keyboard_Fixer-orange?style=for-the-badge&logo=javascript)](https://github.com/CarpeNoctemXD/UserScripts/blob/main/search-engines/greek-english-fixer.user.js)
 
 ### Polyglot Keyboard Fixer (simple version)
 
