@@ -4,7 +4,7 @@
 // @namespace   https://github.com/CarpeNoctemXD/UserScripts
 // @description Adds the repository size next to the repo name on github search and repo pages
 // @description:el Προσθέτει το μέγεθος του αποθετηρίου δίπλα στο όνομα του αποθετηρίου στις σελίδες αναζήτησης και αποθετηρίων του github
-// @version     1.0.1
+// @version     1.0.2
 // @author      CarpeNoctemXD
 // @match       *://github.com/search*
 // @match       *://github.com/*/*
@@ -17,8 +17,7 @@
 // @license     MIT
 // ==/UserScript==
 
-
-// credits to https://github.com/mshll/repo-size for the original script
+/* Edited version of mshll's https://github.com/mshll/repo-size script (version 0.1.1, retrieved on 2025-09-15) under MIT License. */
 
 "use strict";
 
