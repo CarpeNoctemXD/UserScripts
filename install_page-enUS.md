@@ -20,14 +20,14 @@ LEGEND
 ![stable](https://img.shields.io/badge/stable-blue?style=for-the-badge&logo=none)
 ![test](https://img.shields.io/badge/pending_more_testing-silver?style=for-the-badge&logo=none)
 ![revision](https://img.shields.io/badge/pending_revision-gold?style=for-the-badge&logo=none)
-![unfinished](https://img.shields.io/badge/unfinished-brown?style=for-the-badge&logo=none)
+![unfinished](https://img.shields.io/badge/unfinished-ce002a?style=for-the-badge&logo=none)
 
 
 ## ![](https://www.google.com/s2/favicons?sz=32&domain=https://chatgpt.com) ChatGPT
 
 ### Code Tools
 
-[![Install ChatGPt Code Tools](https://img.shields.io/badge/Install-ChatGPT_code_tools-gold?style=for-the-badge&logo=javascript)](https://github.com/CarpeNoctemXD/UserScripts/raw/refs/heads/main/chatgpt/chatgpt-code_tools.user.js)
+[![Install ChatGPt Code Tools](https://img.shields.io/badge/Install-ChatGPT_code_tools-blue?style=for-the-badge&logo=javascript)](https://github.com/CarpeNoctemXD/UserScripts/raw/refs/heads/main/chatgpt/chatgpt-code_tools.user.js)
 
 ---- 
 
@@ -67,13 +67,22 @@ LEGEND
 
 ### Manual VSIX Downloader
 
-[![Install Manual VSIX Downloader](https://img.shields.io/badge/Install-Manual_VSIX_Downloader-silver?style=for-the-badge&logo=javascript)](https://github.com/CarpeNoctemXD/UserScripts/raw/refs/heads/main/visualstudio/vs-marketplace-manual_vsix_downloader.user.js)
+[![Install Manual VSIX Downloader](https://img.shields.io/badge/Install-Manual_VSIX_Downloader-blue?style=for-the-badge&logo=javascript)](https://github.com/CarpeNoctemXD/UserScripts/raw/refs/heads/main/visualstudio/vs-marketplace-manual_vsix_downloader.user.js)
 
 ---- 
 
-## Search Engines
+## ![](https://www.google.com/s2/favicons?sz=64&domain=https://wallhaven.cc) Wallhaven
 
-### 🔍 Supported Search Engines & Platforms
+### Wallpaper Downloader with Tags
+
+[![Install Wallpaper Downloader with Tags](https://img.shields.io/badge/Install-Wallpaper_Downloader_with_Tags-blue?style=for-the-badge&logo=javascript)](https://github.com/CarpeNoctemXD/UserScripts/raw/refs/heads/main/wallhaven/wallhaven-download_with_tags.user.js)
+
+
+----
+
+## 🔍 Search Engines
+
+*Supported Search Engines & Platforms*
 
 | | | | |
 |:---:|:---:|:---:|:---:|
@@ -91,6 +100,6 @@ LEGEND
 
 ### Greek Transliteration Assistant
 
-[![Install Greek Transliteration Assistant](https://img.shields.io/badge/Install-Greek_transliteration_Assistant-silver?style=for-the-badge&logo=javascript)](https://github.com/CarpeNoctemXD/UserScripts/raw/refs/heads/main/search-engines/greek-transliteration-assistant.user.js)
+[![Install Greek Transliteration Assistant](https://img.shields.io/badge/Install-Greek_transliteration_Assistant-gold?style=for-the-badge&logo=javascript)](https://github.com/CarpeNoctemXD/UserScripts/raw/refs/heads/main/search-engines/greek-transliteration-assistant.user.js)
 
 
