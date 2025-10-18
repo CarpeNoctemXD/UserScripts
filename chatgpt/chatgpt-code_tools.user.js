@@ -2,7 +2,7 @@
 // @name         ChatGPT Code Tools
 // @name:el      Εργαλεία Κώδικα για το ChatGPT
 // @namespace    https://github.com/CarpeNoctemXD/UserScripts
-// @version      1.1.12
+// @version      1.3.2
 // @description  Adds functionality to ChatGPT code blocks, including options to save or copy code snippets.
 // @description:el Προσθέτει λειτουργικότητα στα μπλοκ κώδικα του ChatGPT, συμπεριλαμβανομένων επιλογών για αποθήκευση ή αντιγραφή αποσπασμάτων κώδικα.
 // @author       CarpeNoctemXD
@@ -18,44 +18,11 @@
 (function () {
     'use strict';
 
-    const SCRIPT_VERSION = '1.1.11';
+    const SCRIPT_VERSION = '1.3.2';
+    let stackedCodeBlocks = [];
+    let stackCounter = 0;
+    let stackTimeout = null;
 
-    // Function to check for updates
-    const updateCheck = () => {
-        fetch('https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/main/chatgpt/chatgpt_code_tools.js?t=' + Date.now(), {
-            method: 'GET',
-            headers: { 'Cache-Control': 'no-cache' }
-        })
-        .then(response => response.text())
-        .then(data => {
-            const latestVerMatch = /@version\s+(.*)/.exec(data);
-            if (latestVerMatch) {
-                const latestVer = latestVerMatch[1];
-                const currentSubVers = SCRIPT_VERSION.split('.').map(Number);
-                const latestSubVers = latestVer.split('.').map(Number);
-
-                let isOutdated = false;
-                for (let i = 0; i < Math.max(currentSubVers.length, latestSubVers.length); i++) {
-                    if ((latestSubVers[i] || 0) > (currentSubVers[i] || 0)) {
-                        isOutdated = true;
-                        break;
-                    } else if ((latestSubVers[i] || 0) < (currentSubVers[i] || 0)) {
-                        break;
-                    }
-                }
-
-                if (isOutdated) {
-                    alert(`Update available! 🚀\nA new version (v${latestVer}) is available! Click OK to download the update.`);
-                    window.open('https://raw.githubusercontent.com/CarpeNoctemXD/UserScripts/main/chatgpt/chatgpt_code_tools.js?t=' + Date.now(), '_blank');
-                } else {
-                    console.log('Your script is up-to-date.');
-                }
-            }
-        })
-        .catch(err => console.error('Failed to check for updates:', err));
-    };
-
-    // Function to get MIME type based on file extension
     const getMimeType = (filename) => {
         const ext = filename.split('.').pop();
         switch (ext) {
@@ -89,10 +56,8 @@
         }
     };
 
-    // Function to determine file extension based on the code block's language
     const getFileExtension = (languageClass) => {
-        if (!languageClass) return 'txt'; // Default to .txt if no class is found
-
+        if (!languageClass) return 'txt';
         if (languageClass.includes('language-python')) return 'py';
         if (languageClass.includes('language-javascript') || languageClass.includes('language-js')) return 'js';
         if (languageClass.includes('language-html')) return 'html';
@@ -119,11 +84,9 @@
         if (languageClass.includes('language-markdown') || languageClass.includes('language-md')) return 'md';
         if (languageClass.includes('language-xlsx')) return 'xlsx';
         if (languageClass.includes('language-bat') || languageClass.includes('language-batch')) return 'bat';
-
-        return 'txt'; // Default to .txt if no matching language is found
+        return 'txt';
     };
 
-    // Function to download the text as a file
     const downloadFile = (text, filename, button) => {
         const blob = new Blob([text], { type: getMimeType(filename) });
         const url = URL.createObjectURL(blob);
@@ -137,137 +100,116 @@
         setButtonState(button, 'working', 'download');
     };
 
-    // Function to copy text to the clipboard
     const copyToClipboard = (text, button) => {
-        navigator.clipboard.writeText(text).then(() => {
-            setButtonState(button, 'working', 'copy');
-        }).catch((err) => {
-            console.error('Failed to copy code: ', err);
-            setButtonState(button, 'error', 'copy');
-        });
+        navigator.clipboard.writeText(text).then(() => setButtonState(button, 'working', 'copy'))
+        .catch((err) => { console.error(err); setButtonState(button, 'error', 'copy'); });
     };
 
-    // Function to set the button state and color
-    const setButtonState = (button, state, type) => {
-        switch (state) {
-            case 'working':
-                button.textContent = type === 'download' ? 'Saving...' : 'Copied!';
-                button.style.backgroundColor = 'green';
-                break;
-            case 'error':
-                button.textContent = type === 'download' ? 'Could not download' : 'Could not copy';
-                button.style.backgroundColor = 'red';
-                break;
-            case 'standby':
-            default:
-                button.textContent = button.dataset.defaultText || 'Unknown';
-                button.style.backgroundColor = '#007bff'; // Blue
-                break;
-        }
-        button.style.color = 'white';
-
-        // Revert the button to standby after 5 seconds
-        if (state === 'working' || state === 'error') {
-            setTimeout(() => {
-                setButtonState(button, 'standby', type);
-            }, 5000); // 5 seconds
-        }
+    const copyStackedCode = () => {
+        if (stackedCodeBlocks.length === 0) return;
+        const combined = stackedCodeBlocks.join('\n\n// ' + '='.repeat(50) + '\n\n');
+        navigator.clipboard.writeText(combined).catch(err => console.error('Failed to copy stacked code', err));
     };
 
-    // Function to add save and copy buttons to a code block
+    const stackCodeBlock = (text, button) => {
+        if (stackTimeout) clearTimeout(stackTimeout);
+        stackCounter++; stackedCodeBlocks.push(text);
+        copyStackedCode();
+        document.querySelectorAll('.stack-button').forEach(btn => setButtonState(btn, 'stacked', 'stack', stackCounter));
+        stackTimeout = setTimeout(resetStack, 15000);
+    };
+
+    const resetStack = () => {
+        stackCounter = 0; stackedCodeBlocks = [];
+        document.querySelectorAll('.stack-button').forEach(btn => setButtonState(btn, 'standby', 'stack'));
+        if (stackTimeout) { clearTimeout(stackTimeout); stackTimeout = null; }
+    };
+
+    const setButtonState = (button, state, type, count = 0) => {
+        switch(state) {
+            case 'working': button.textContent = type==='download'?'Saving...':'Copied!'; button.style.background='linear-gradient(135deg, #28a745, #20c997)'; break;
+            case 'error': button.textContent='Error!'; button.style.background='linear-gradient(135deg, #dc3545, #c82333)'; break;
+            case 'stacked': button.textContent=`Stacked ${count}`; button.style.background='linear-gradient(135deg, #e83e8c, #d91a72)'; break;
+            default: button.textContent=button.dataset.defaultText||'Unknown';
+                if(type==='save') button.style.background='linear-gradient(135deg, #007BFF, #0069D9)';
+                else if(type==='copy') button.style.background='linear-gradient(135deg, #0069D9, #0056B3)';
+                else if(type==='stack') button.style.background='linear-gradient(135deg, #0056B3, #384CBA)';
+        }
+        button.style.color='white';
+        if((state==='working'||state==='error')&&type!=='stack') setTimeout(()=>setButtonState(button,'standby',type),5000);
+    };
+
+    // --- Improved filename detection ---
+    const detectScriptName = (codeBlock) => {
+        // Traverse backwards and collect text content from previous siblings
+        let prev = codeBlock.previousSibling;
+        let lastLine = '';
+        while (prev) {
+            let text = prev.textContent?.trim();
+            if (text) lastLine = text; // always keep the last non-empty line
+            prev = prev.previousSibling;
+        }
+
+        // Remove leading emoji/non-alphanumeric characters
+        lastLine = lastLine.replace(/^[^\w]+/, '');
+
+        // Match "File: <name>" and strip parentheses
+        let match = lastLine.match(/^File:\s*(.+?)(?:\s*\(.*\))?$/i);
+        if (match) {
+            let name = match[1].trim();
+            // Remove invalid filesystem characters
+            name = name.replace(/[<>:"/\\|?*≤]/g,'');
+            return name;
+        }
+
+        // fallback: first comment line inside the code block
+        const codeText = codeBlock.querySelector('code')?.textContent || '';
+        const firstLine = codeText.split(/\r?\n/)[0].trim();
+        const commentMatch = firstLine.match(/^[#;\/\/]+\s*(.+\.\w+)$/);
+        if (commentMatch) return commentMatch[1].trim();
+
+        // final fallback: language-based extension
+        const languageClass = codeBlock.querySelector('code')?.className || '';
+        const ext = getFileExtension(languageClass);
+        return `code.${ext}`;
+    };
+
+
     const addButtonsToCodeBlock = (codeBlock) => {
-        // Ensure existing buttons are not duplicated
-        if (codeBlock.querySelector('.code-buttons-wrapper')) return;
+        if(codeBlock.querySelector('.code-buttons-wrapper')) return;
+        const wrapper=document.createElement('div'); wrapper.classList.add('code-buttons-wrapper');
+        wrapper.style.position='relative'; wrapper.style.display='flex'; wrapper.style.justifyContent='flex-start'; wrapper.style.gap='8px'; wrapper.style.marginTop='8px';
 
-        const wrapper = document.createElement('div');
-        wrapper.classList.add('code-buttons-wrapper');
-        wrapper.style.position = 'relative';
-        wrapper.style.display = 'flex';
-        wrapper.style.justifyContent = 'flex-start';
-        wrapper.style.gap = '8px';
-        wrapper.style.marginTop = '8px';
-
-        const saveButton = document.createElement('button');
-        saveButton.textContent = 'Save Code';
-        styleButton(saveButton);
-
-        saveButton.addEventListener('click', (e) => {
+        const saveButton=document.createElement('button'); saveButton.textContent='Save'; styleButton(saveButton,'save');
+        saveButton.addEventListener('click',(e)=>{
             e.stopPropagation();
-            const codeElement = codeBlock.querySelector('code');
-            if (codeElement) {
-                const text = codeElement.textContent;
-                const languageClass = codeElement.className;
-                const extension = getFileExtension(languageClass);
-                downloadFile(text, `code.${extension}`, saveButton);
-            }
+            const codeEl=codeBlock.querySelector('code'); if(codeEl){ const text=codeEl.textContent; const filename=detectScriptName(codeBlock); downloadFile(text,filename,saveButton);}
         });
 
-        const copyButton = document.createElement('button');
-        copyButton.textContent = 'Copy Code';
-        styleButton(copyButton);
+        const copyButton=document.createElement('button'); copyButton.textContent='Copy'; styleButton(copyButton,'copy');
+        copyButton.addEventListener('click',(e)=>{ e.stopPropagation(); const codeEl=codeBlock.querySelector('code'); if(codeEl) copyToClipboard(codeEl.textContent,copyButton); });
 
-        copyButton.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const codeElement = codeBlock.querySelector('code');
-            if (codeElement) {
-                const text = codeElement.textContent;
-                copyToClipboard(text, copyButton);
-            }
-        });
+        const stackButton=document.createElement('button'); stackButton.textContent='Stack'; stackButton.classList.add('stack-button'); styleButton(stackButton,'stack');
+        stackButton.addEventListener('click',(e)=>{ e.stopPropagation(); const codeEl=codeBlock.querySelector('code'); if(codeEl) stackCodeBlock(codeEl.textContent,stackButton); });
 
-        // Set default text for buttons
-        saveButton.dataset.defaultText = 'Save Code';
-        copyButton.dataset.defaultText = 'Copy Code';
+        saveButton.dataset.defaultText='Save'; copyButton.dataset.defaultText='Copy'; stackButton.dataset.defaultText='Stack';
 
-        codeBlock.parentNode.insertBefore(wrapper, codeBlock.nextSibling);
-        wrapper.appendChild(saveButton);
-        wrapper.appendChild(copyButton);
+        codeBlock.parentNode.insertBefore(wrapper,codeBlock.nextSibling);
+        wrapper.appendChild(saveButton); wrapper.appendChild(copyButton); wrapper.appendChild(stackButton);
     };
 
-    // Function to style the buttons
-    const styleButton = (button) => {
-        Object.assign(button.style, {
-            display: 'inline-block',
-            padding: '8px',
-            background: '#007bff', // Default standby color
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            transition: 'background-color 0.3s ease',
-        });
-
-        button.addEventListener('mouseover', () => {
-            if (button.textContent === 'Saving...' || button.textContent === 'Copied!' || button.textContent === 'Could not download' || button.textContent === 'Could not copy') {
-                button.style.backgroundColor = button.textContent.includes('Could not') ? 'darkred' : 'darkgreen';
-            } else {
-                button.style.backgroundColor = '#0056b3'; // Darker blue for standby
-            }
-        });
-
-        button.addEventListener('mouseout', () => {
-            if (button.textContent === 'Saving...' || button.textContent === 'Copied!' || button.textContent === 'Could not download' || button.textContent === 'Could not copy') {
-                button.style.backgroundColor = button.textContent.includes('Could not') ? 'red' : 'green';
-            } else {
-                button.style.backgroundColor = '#007bff'; // Default blue for standby
-            }
-        });
+    const styleButton=(button,type)=>{
+        let baseGradient;
+        switch(type){ case 'save': baseGradient='linear-gradient(135deg, #007BFF, #0069D9)'; break; case 'copy': baseGradient='linear-gradient(135deg, #0069D9, #0056B3)'; break; case 'stack': baseGradient='linear-gradient(135deg, #0056B3, #384CBA)'; break;}
+        Object.assign(button.style,{display:'inline-block',padding:'10px 16px',background:baseGradient,color:'white',border:'none',borderRadius:'6px',cursor:'pointer',transition:'all 0.3s ease',fontSize:'14px',fontWeight:'600',textShadow:'0 1px 1px rgba(0,0,0,0.2)',boxShadow:'0 2px 4px rgba(0,0,0,0.1)'});
+        button.addEventListener('mouseover',()=>{ const c=button.textContent; if(c.includes('...')||c.includes('!')||c.startsWith('Stacked')) return; let hover; switch(type){ case 'save': hover='linear-gradient(135deg, #0069D9, #0056B3)'; break; case 'copy': hover='linear-gradient(135deg, #0056B3, #004499)'; break; case 'stack': hover='linear-gradient(135deg, #384CBA, #2a3a9e)'; break;} button.style.background=hover; button.style.transform='translateY(-1px)'; button.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)';});
+        button.addEventListener('mouseout',()=>{ const c=button.textContent; if(c.includes('...')||c.includes('!')||c.startsWith('Stacked')) return; button.style.background=baseGradient; button.style.transform='translateY(0)'; button.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)';});
+        button.addEventListener('mousedown',()=>{ const c=button.textContent; if(!c.includes('...')&&!c.includes('!')&&!c.startsWith('Stacked')){ button.style.transform='translateY(0)'; button.style.boxShadow='0 1px 2px rgba(0,0,0,0.1)'; } });
     };
 
-    // Function to observe code blocks and add buttons
-    const observeCodeBlocks = () => {
-        const codeBlocks = document.querySelectorAll('pre:not(.processed)');
-        codeBlocks.forEach(block => {
-            addButtonsToCodeBlock(block);
-            block.classList.add('processed');
-        });
-    };
-
-    // Mutation observer to detect new code blocks added dynamically
-    const observer = new MutationObserver(observeCodeBlocks);
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    // Initial call to process existing code blocks
+    const observeCodeBlocks=()=>{ document.querySelectorAll('pre:not(.processed)').forEach(addButtonsToCodeBlock); document.querySelectorAll('pre:not(.processed)').forEach(b=>b.classList.add('processed'));};
+    const observer=new MutationObserver(observeCodeBlocks);
+    observer.observe(document.body,{childList:true,subtree:true});
     observeCodeBlocks();
 
 })();
