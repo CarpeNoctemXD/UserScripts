@@ -2,7 +2,15 @@ desktop.ini
 .gitconfig
 .git
 
+# IDE files
 .todo
-*test*.*
+*-test.*
+*-debug.*
+*-dev.*
+* copy.*
 
+# python automation scripts
+*.py
+
+# old folders
 old
